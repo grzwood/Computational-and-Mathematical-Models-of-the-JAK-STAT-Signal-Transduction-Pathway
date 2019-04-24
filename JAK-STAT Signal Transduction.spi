@@ -1,0 +1,335 @@
+(* Reactions from Yamada et.al 2003 model*)
+
+directive sample 28.0e+3 (* 3.6e+3 = 60 minutes *) 1000
+directive graph
+directive plot 
+STAT1c();SOCS1();IFNRJ();IFNRJ2L();mRNAc();STAT1nLSTAT1nL()
+
+
+(*****************************************************************
+ *                                                               *
+ * First and second order rate constants are expressed in units  *
+ * of 1/s and 10^-9 1/Ms                                         *
+ *                                                               *
+ *****************************************************************)
+
+val scale           = 10.0
+val volume          = 1.0                   (* litre *)
+val mole            = 6.0e+23               (* molecules *)
+val substance       = 1.0                   (* 10^-9 mole; *)
+val nM_per_second   = 1.0                   (* 10^-9 mole*litre^-1*second^-1; *)
+val sec_inv         = 1.0                   (* second^-1; *)
+val nM_inv_sec_inv  = 1.0                   (* 10^-9 mole^-1*litre*second^-1; *)
+(*val ka              = nM_per_second*)
+val kf              = nM_inv_sec_inv/scale
+val kb              = sec_inv
+
+val k01 = 0.1*kf                      val kd01 = 0.05*kb
+val k02 = 0.02*kf                     val kd02 = 0.02*kb
+val k03 = 0.04*kf                     val kd03 = 0.2*kb
+val k04 = 0.005     
+val k05 = 0.008*kf                    val kd05 = 0.8*kb
+val k06 = 0.4
+val k07 = 0.005*kf                    val kd07 = 0.5*kb
+val k08 = 0.02*kf                     val kd08 = 0.1*kb
+val k09 = 0.001*kf                    val kd09 = 0.2*kb
+val k10 = 0.003
+val k11 = 0.001*kf                    val kd11 = 0.2*kb
+val k12 = 0.003
+val k13 = 0.001*kf                    val kd13 = 0.2*kb
+val k14 = 0.003
+val k15 = 2.0e-7*kf                   val kd15 = 0.2*kb
+val k16 = 0.005
+val k17 = 0.02*kf                     val kd17 = 0.1*kb
+val k18 = 0.001*kf                    val kd18 = 0.2*kb
+val k19 = 0.005
+val k20 = 0.001*kf                    val kd20 = 0.2*kb
+val k21 = 0.005     
+val k22 = 2.0e-7*kf                   val kd22 = 0.2*kb
+val k23 = 0.05     
+
+val k24 = 2.5e-5
+val k25 = 0.001
+val k26 = 0.01
+val k27 = 0.02*kf                     val kd27 = 0.1*kb
+val k28 = 5.0e-4
+val k29 = 5.0e-4
+val k30 = 0.008*kf                    val kd30 = 0.8*kb
+val k31 = 0.001*kf                    val kd31 = 0.2*kb
+val k32 = 0.003
+val k33 = 5.0e-4
+val k34 = 0.001*kf                     val kd34 = 0.2*kb 
+val k35 = 0.0080*kf                    val kd35 = 0.8*kb
+val k36 = 0.001*kf                     val kd36 = 0.2*kb
+val k37 = 0.0030
+val k38 = 5.0e-4
+val k39 = 5.0e-4
+val k40 = 0.0030
+val k41 = 5.0e-4
+val k42 = 0.02*kf                      val kd42 = 0.1*kb
+val k43 = 0.02*kf                      val kd43 = 0.1*kb
+val k44 = 0.02*kf                      val kd44 = 0.1*kb
+val k45 = 0.02*kf                      val kd45 = 0.02*kb
+val k46 = 0.1*kf                       val kd46 = 0.05*kb
+
+(* ==== Quantity adjustments ==== *)
+
+val r01 = k01                          val s01  = kd01
+val r02 = k02                          val s02  = kd02/2.0 (* Dimerization *)
+val r03 = k03                          val s03  = kd03
+val r04 = k04
+val r05 = k05                          val s05  = kd05
+val r06 = k06
+val r07 = k07                          val s07  = kd07
+val r08 = k08                          val s08  = kd08
+val r09 = k09                          val s09  = kd09
+val r10 = k10
+val r11 = k11                          val s11  = kd11
+val r12 = k12
+val r13 = k13                          val s13  = kd13
+val r14 = k14
+val r15 = k15                          val s15  = kd15
+val r16 = k16
+val r17 = k17                          val s17  = kd17
+val r18 = k18                          val s18  = kd18
+val r19 = k19
+val r20 = k20                          val s20  = kd20
+val r21 = k21
+val r22 = k22                          val s22  = kd22
+val r23 = k23 
+val r24 = k24
+val r25 = k25
+val r26 = k26
+val r27 = k27                          val s27  = kd27
+val r28 = k28
+val r29 = k29
+val r30 = k30                          val s30  = kd30
+val r31 = k31                          val s31  = kd31
+val r32 = k32
+val r33 = k33
+val r34 = k34                          val s34  = kd34
+val r35 = k35                          val s35  = kd35
+val r36 = k36                          val s36  = kd36     
+val r37 = k37
+val r38 = k38
+val r39 = k39
+val r40 = k40
+val r41 = k41
+val r42 = k42                          val s42  = kd42     
+val r43 = k43                          val s43  = kd43
+val r44 = k44                          val s44  = kd44     
+val r45 = k45                          val s45  = kd45
+val r46 = k46                          val s46  = kd46     
+
+new c01@r01:chan
+new c02@r02:chan
+new c03@r03:chan
+new c05@r05:chan
+new c07@r07:chan
+new c08@r08:chan
+new c09@r09:chan
+new c11@r11:chan
+new c13@r13:chan
+new c15@r15:chan
+new c17@r17:chan
+new c18@r18:chan
+new c20@r20:chan
+new c22@r22:chan
+new c27@r27:chan
+new c30@r30:chan
+new c31@r31:chan
+new c34@r34:chan
+new c35@r35:chan
+new c36@r36:chan
+new c42@r42:chan
+new c43@r43:chan
+new c44@r44:chan
+new c45@r45:chan
+new c46@r46:chan
+
+
+let SHP2() =
+    do !c31;                      ()
+    or !c09;                      ()
+    or !c34;                      ()
+    or !c36;                      ()
+
+let JAK() = 
+    do !c01;                      ()
+    or !c46;                      ()
+
+let R() =
+    do ?c01;                      ( RJ              () )
+    or !c45;                      ()
+and RJ() = 
+    do delay@s01;                 ( R               () |
+                                    JAK             () )
+    or !c02;                      ()
+
+let mRNAn() =
+    delay@r25;                    ( mRNAc           () )
+and mRNAc() =
+    do delay@r26;                 ( mRNAc           () |
+                                    SOCS1           () ) 
+    or delay@r28;                 ()
+and SOCS1() =
+    do ?c27;                      ( IFNRJ2LSOCS1    () )
+    or delay@r29;                 ()
+    or !c42;                      ()
+    or !c43;                      ()
+    or !c44;                      ()
+and IFNRJ2LSOCS1() =
+    do delay@s27;                 ( SOCS1           () |
+                                    IFNRJ2L         () )
+    or ?c30;                      ( IFNRJ2LSOCS1STAT1c())
+    or ?c34;                      ( IFNRJ2LSHP2SOCS1() )
+    or delay@r41;                 ( IFNRJ2L         () )
+and IFNRJ2LSOCS1STAT1c() =
+    do delay@s30;                 ( STAT1c          () |
+                                    IFNRJ2LSOCS1    () )
+    or ?c31;                      ( IFNRJ2LSHP2SOCS1STAT1c())
+    or delay@r38;                 ( IFNRJ2LSTAT1c   () )
+    or delay@s42;                 ( IFNRJ2LSTAT1c   () |
+                                    SOCS1           () )
+and IFNRJ2LSHP2SOCS1STAT1c() =
+    do delay@s31;                 ( SHP2            () |
+                                    IFNRJ2LSOCS1STAT1c())
+    or delay@r32;                 ( SOCS1           () |
+                                    IFNRJ2          () |
+                                    STAT1c          () |
+                                    SHP2            () )
+    or delay@r33;                 ( IFNRJ2LSHP2STAT1c())
+    or delay@s35;                 ( STAT1c          () |
+                                    IFNRJ2LSHP2SOCS1() )
+    or delay@s44;                 ( SOCS1           () |
+                                    IFNRJ2LSHP2STAT1c())
+and IFNRJ2LSHP2STAT1c() =         
+    do delay@s36;                 ( IFNRJ2LSTAT1c   () |
+                                    SHP2            () )
+    or delay@r37;                 ( STAT1c          () |
+                                    SHP2            () |
+                                    IFNRJ2          () )
+    or ?c44;                      ( IFNRJ2LSHP2SOCS1STAT1c ())
+and IFNRJ2LSHP2SOCS1() =
+    do delay@s34;                 ( IFNRJ2LSOCS1    () |
+                                    SHP2            () )
+    or ?c35;                      ( IFNRJ2LSHP2SOCS1STAT1c ())
+    or delay@r39;                 ( IFNRJ2LSHP2     () )
+    or delay@r40;                 ( IFNRJ2          () |
+                                    SHP2            () |
+                                    SOCS1           () )
+    or delay@s43;                 ( IFNRJ2LSHP2     () |
+                                    SOCS1           () )
+and IFN() =
+    do ?c02;                      ( IFNRJ           () )
+    or ?c45;                      ( IFNR            () )
+and IFNR() =
+    do delay@s45;                 ( R               () |
+                                    IFN             () )
+    or ?c46;                      ( IFNRJ           () )
+and IFNRJ() =
+    do delay@s02;                 ( IFN             () |
+                                    RJ              () )
+    or ?c03;                      ( IFNRJ2          () )
+    or !c03;                      ()
+    or delay@s46;                 ( JAK             () |
+                                    IFNR            () )
+and IFNRJ2() =
+    do delay@s03;                 ( IFNRJ           () |
+                                    IFNRJ           () )
+    or delay@r04;                 ( IFNRJ2L         () )
+and IFNRJ2L() =
+    do ?c05;                      ( IFNRJ2LSTAT1c   () )
+    or ?c07;                      ( IFNRJ2LSTAT1cL  () )
+    or ?c09;                      ( IFNRJ2LSHP2     () )
+    or !c27;                      ()
+and IFNRJ2LSTAT1c() =
+    do delay@s05;                 ( IFNRJ2L         () |
+                                    STAT1c          () )
+    or delay@r06;                 ( IFNRJ2L         () |
+                                    STAT1cL         () )
+    or ?c36;                      ( IFNRJ2LSHP2STAT1c())                                
+    or ?c42;                      ( IFNRJ2LSOCS1STAT1c())                                
+and IFNRJ2LSTAT1cL() =
+    delay@s07;                    ( IFNRJ2L         () |
+                                    STAT1cL         () )
+and IFNRJ2LSHP2() =
+    do delay@s09;                 ( IFNRJ2L         () |
+                                    SHP2            () )
+    or delay@r10;                 ( IFNRJ2          () |
+                                    SHP2            () )
+    or ?c43;                      ( IFNRJ2LSHP2SOCS1() )
+and STAT1c() =
+    do !c30;                      ()
+    or ?c15;                      ( STAT1cSTAT1cL   () )
+    or !c05;                      ()
+    or !c35;                      ()
+and STAT1cL() =
+    do !c07;                      ()
+    or ?c08;                      ( STAT1cLSTAT1cL  () )
+    or !c08;                      ()
+    or !c11;                      ()
+    or !c15;                      ()
+and STAT1cLSTAT1cL() =
+    do delay@s08;                 ( STAT1cL         () |
+                                    STAT1cL         () )
+    or !c13;                      ()
+    or delay@r16;                 ( STAT1nLSTAT1nL  () )
+and STAT1cSTAT1cL () =
+    delay@s15;                    ( STAT1c          () |
+                                    STAT1cL         () )
+and STAT1nLSTAT1nL() =
+    do delay@s17;                 ( STAT1nL         () |
+                                    STAT1nL         () )
+    or !c20;                      ()
+    or delay@r24;                 ( STAT1nLSTAT1nL  () |
+                                    mRNAn           () )  (* ?? *)
+and STAT1nL() =
+    do ?c17;                      ( STAT1nLSTAT1nL  () )
+    or !c17;                      ()
+    or !c18;                      ()
+    or !c22;                      ()
+and STAT1nSTAT1nL() =
+    delay@s22;                    ( STAT1n          () |
+                                    STAT1nL         () )
+and STAT1n() =
+    do ?c22;                      ( STAT1nSTAT1nL   () )
+    or delay@r23;                 ( STAT1c          () )
+    
+
+let PPX() =
+    do ?c11;                      ( PPXSTAT1cL      () )
+    or ?c13;                      ( PPXSTAT1cLSTAT1cL())
+and PPXSTAT1cL() =
+    do delay@s11;                 ( PPX             () |
+                                    STAT1cL         () )
+    or delay@r12;                 ( PPX             () |
+                                    STAT1c          () )
+and PPXSTAT1cLSTAT1cL() =
+    do delay@s13;                 ( PPX             () |
+                                    STAT1cLSTAT1cL  () )
+    or delay@r14;                 ( PPX             () |
+                                    STAT1cSTAT1cL   () )
+
+let PPN() =
+    do ?c18;                      ( PPNSTAT1nL      () )
+    or ?c20;                      ( PPNSTAT1nLSTAT1nL())
+and PPNSTAT1nL() =
+    do delay@s18;                 ( PPN             () |
+                                    STAT1nL         () )
+    or delay@r19;                 ( PPN             () |
+                                    STAT1n          () )
+and PPNSTAT1nLSTAT1nL() =
+    do delay@s20;                 ( PPN             () |
+                                    STAT1nLSTAT1nL  () )
+    or delay@r21;                 ( PPN             () |
+                                    STAT1nSTAT1nL   () )
+
+
+run 10 of R()
+run 10 of JAK()
+run 10 of IFN()
+run 1000 of STAT1c()
+run 100 of SHP2()
+run 50 of PPX()
+run 60 of PPN()
